@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   weight_slider: ^1.2.2
   font_awesome_flutter: ^9.1.0
+  animated_text_kit: ^4.2.1
+  vertical_weight_slider: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +52,7 @@ flutter:
   assets:
     - Assets/girl.png
     - Assets/boy.png
+    - Assets/Couple.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

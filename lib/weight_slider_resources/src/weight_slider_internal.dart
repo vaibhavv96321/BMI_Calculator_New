@@ -51,11 +51,22 @@ class WeightSliderInternal extends StatelessWidget {
                   behavior: HitTestBehavior.translucent,
                   onTap: () => _animateTo(itemValue, durationMillis: 50),
                   child: FittedBox(
-                    child: Text(
-                      itemValue != value
-                          ? itemValue.toString()
-                          : itemValue.toString() + this.unit,
-                      style: _getTextStyle(context, itemValue),
+                    child: Row(
+                      children: [
+                        Text(
+                          itemValue.toString(),
+                          style: _getTextStyle(context, itemValue),
+                        ),
+                        Text(
+                          '${itemValue != value ? '' : this.unit}',
+                          style: TextStyle(
+                            color: kSelectedStuffColor,
+                            fontFamily: 'com',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     ),
                     fit: BoxFit.scaleDown,
                   ),

@@ -26,7 +26,7 @@ class GenderBox extends StatelessWidget {
                     EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: kGenderBoxColor,
+                  color: kBoxColor,
                   gradient: gradient,
                 ),
                 child: Column(
