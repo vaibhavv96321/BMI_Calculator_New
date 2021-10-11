@@ -1,8 +1,12 @@
 import 'package:bmi_new_theme/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bmi_new_theme/verticle_weight_slider/vertical_weight_slider.dart';
+import 'package:bmi_new_theme/scalesWidget_cm_ft.dart';
+import 'package:bmi_new_theme/height_page_unit_button.dart';
 
-enum unit { cm, ft, t }
+enum unit { cm, ft, m }
+unit uni = unit.cm;
 
 class HeightSelector extends StatefulWidget {
   @override
@@ -10,10 +14,9 @@ class HeightSelector extends StatefulWidget {
 }
 
 class _HeightSelectorState extends State<HeightSelector> {
-  unit uni = unit.cm;
-  late WeightSliderController _controller;
   double _height = 170;
   int _minHeight = 100;
+  late WeightSliderController _controller;
 
   @override
   void initState() {
@@ -51,86 +54,49 @@ class _HeightSelectorState extends State<HeightSelector> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               child: Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        gradient: uni == unit.cm ? kUnitGradient : null,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: RawMaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          uni = unit.cm;
-                        });
-                      },
-                      child: Text(
-                        'cm',
-                        style: kUnitTextStyle,
-                      ),
-                    ),
-                  ),
+                  UnitContainer(unit.cm, () {
+                    setState(() {
+                      uni = unit.cm;
+                    });
+                  }, 'cm'),
                   SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: uni == unit.ft ? kUnitGradient : null,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: RawMaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          uni = unit.ft;
-                        });
-                      },
-                      child: Text(
-                        'ft',
-                        style: kUnitTextStyle,
-                      ),
-                    ),
-                  )
+                  UnitContainer(unit.ft, () {
+                    setState(() {
+                      uni = unit.ft;
+                    });
+                  }, 'ft')
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      '${_height.toInt()}',
-                      style: kHeightTextStyle,
-                    ),
-                    Text(
-                      '${uni == unit.cm ? 'cm' : 'ft'}',
-                      style: kSmallTextStyle,
-                    )
-                  ],
-                ),
-                Flexible(
-                  //TODO: always wrap this when using a scrollable widget
-                  child: VerticalWeightSlider(
-                    height: 450,
-                    controller: _controller,
-                    maxWeight: 250,
-                    config: PointerConfig(
-                      colors: [
-                        Colors.grey[700],
-                        Colors.grey[500],
-                        Colors.grey[200],
-                      ],
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _height = value;
-                      });
-                    },
+          uni == unit.cm
+              ? CentimeterScale('${_height.toInt()}', (double value) {
+                  setState(() {
+                    _height = value;
+                  });
+                }, _controller)
+              : FeetScale(),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Calculate',
+                    style: kAppBarTextStyle,
                   ),
-                ),
-              ],
+                  Icon(Icons.arrow_forward),
+                ],
+              ),
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                gradient: kMaleGradient,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              margin: EdgeInsets.only(left: 110, right: 110, bottom: 50),
             ),
           ),
         ],

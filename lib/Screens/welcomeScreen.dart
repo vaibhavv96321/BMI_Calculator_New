@@ -6,6 +6,8 @@ import 'package:bmi_new_theme/weight_slider_resources/weight_slider.dart';
 import 'package:bmi_new_theme/gender_Box.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
+import 'height_page.dart';
+
 enum gender { male, female, t }
 gender gen = gender.t;
 
@@ -151,7 +153,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               height: 25,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return HeightSelector();
+                }));
+              },
               child: Container(
                 decoration: BoxDecoration(
                   gradient: kFemaleGradient,
