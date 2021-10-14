@@ -90,7 +90,7 @@ class VerticalWeightSlider extends StatelessWidget {
                     height: 5.0,
                     width: 150.0,
                     alignment: Alignment.centerLeft,
-                    color: kSelectedStuffColor,
+                    color: kYelloColor,
                   ),
             ],
           ),

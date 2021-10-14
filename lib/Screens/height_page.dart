@@ -5,10 +5,15 @@ import 'package:bmi_new_theme/verticle_weight_slider/vertical_weight_slider.dart
 import 'package:bmi_new_theme/scalesWidget_cm_ft.dart';
 import 'package:bmi_new_theme/height_page_unit_button.dart';
 
+import '../calculator_brain.dart';
+
 enum unit { cm, ft, m }
 unit uni = unit.cm;
 
 class HeightSelector extends StatefulWidget {
+  HeightSelector({@required this.weight = 0});
+  final int weight;
+
   @override
   _HeightSelectorState createState() => _HeightSelectorState();
 }
@@ -30,7 +35,7 @@ class _HeightSelectorState extends State<HeightSelector> {
     return SafeArea(
         child: Scaffold(
       backgroundColor: kBackgrounColor,
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(
             height: 25,
@@ -79,7 +84,10 @@ class _HeightSelectorState extends State<HeightSelector> {
                 }, _controller)
               : FeetScale(),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Brain brain = Brain(weight: widget.weight, height: _height);
+              //TODO: here i have to put navigator.push and semd values to result page
+            },
             child: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +101,7 @@ class _HeightSelectorState extends State<HeightSelector> {
               ),
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
-                gradient: kMaleGradient,
+                gradient: kUnitGradient,
                 borderRadius: BorderRadius.circular(15),
               ),
               margin: EdgeInsets.only(left: 110, right: 110, bottom: 50),

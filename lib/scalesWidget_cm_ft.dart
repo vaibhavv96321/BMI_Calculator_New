@@ -14,7 +14,8 @@ class CentimeterScale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 525,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -29,7 +30,7 @@ class CentimeterScale extends StatelessWidget {
               ),
               Text(
                 'cm',
-                style: kSmallTextStyle,
+                style: kSmallTextStyle.copyWith(color: kYelloColor),
               )
             ],
           ),
@@ -56,41 +57,50 @@ class CentimeterScale extends StatelessWidget {
 }
 
 class FeetScale extends StatelessWidget {
+  static int feet = 5, inch = 10;
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-          margin: EdgeInsets.symmetric(vertical: 200, horizontal: 80),
-          child: Row(
-            children: [
-              FeetTextField(),
-              Text(
-                ' \' ',
-                style: kHeightTextStyle,
-              ),
-              FeetTextField(),
-              Text(
-                '\'\'',
-                style: kHeightTextStyle,
-              ),
-            ],
-          )),
-    );
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 200, horizontal: 70),
+        child: Row(
+          children: [
+            FeetTextField(
+              textValueFunction: (String newValue) {
+                feet = int.parse(newValue);
+              },
+            ),
+            Text(
+              ' \' ',
+              style: kHeightTextStyle,
+            ),
+            FeetTextField(
+              textValueFunction: (String newValue) {
+                inch = int.parse(newValue);
+              },
+            ),
+            Text(
+              '\'\'',
+              style: kHeightTextStyle,
+            ),
+          ],
+        ));
   }
 }
 
 class FeetTextField extends StatelessWidget {
-  const FeetTextField({
-    Key? key,
-  }) : super(key: key);
-
+  FeetTextField({@required this.textValueFunction});
+  final Function(String)? textValueFunction;
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: TextField(
-        decoration: InputDecoration(
-          labelStyle: kHeightTextStyle,
-        ),
+        onChanged: textValueFunction,
+        textAlign: TextAlign.center,
+        style: kHeightTextStyle.copyWith(color: Colors.white),
+        cursorColor: kYelloColor,
+        keyboardType: TextInputType.number,
+        decoration: height_text_field,
       ),
     );
   }

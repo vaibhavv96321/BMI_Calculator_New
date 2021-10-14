@@ -155,7 +155,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HeightSelector();
+                  return HeightSelector(
+                    weight: weight,
+                  );
                 }));
               },
               child: Container(

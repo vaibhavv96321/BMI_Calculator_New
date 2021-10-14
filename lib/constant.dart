@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-const kBackgrounColor = Color(0xFF363450);
+const kBackgrounColor = Color(0xFF0A0716);
 
 const kBoxColor = Color(0xFF202137);
 
@@ -9,7 +9,11 @@ const kSelectedStuffColor = Color(0xFF9688FC);
 
 const kSelectedStuffColor2 = Color(0xFF6251E2);
 
+const kOrangeColor = Color(0xFFFF4A33);
+
 const kWhiteColor = Colors.white;
+
+const kYelloColor = Color(0xFFFCDB65);
 
 const kAppBarTextStyle = TextStyle(
   color: kWhiteColor,
@@ -45,8 +49,8 @@ const kAgeTextStyle = TextStyle(
 
 const colorizeColors = [
   Colors.white,
-  Colors.blue,
-  kSelectedStuffColor,
+  kOrangeColor,
+  kYelloColor,
   kSelectedStuffColor2,
 ];
 
@@ -73,5 +77,17 @@ const kHeightTextStyle = TextStyle(
   fontSize: 90,
   fontFamily: 'com',
   fontWeight: FontWeight.bold,
-  color: kSelectedStuffColor,
+  color: kWhiteColor,
+);
+
+const height_text_field = InputDecoration(
+  labelStyle: kHeightTextStyle,
+  fillColor: kYelloColor,
+  hoverColor: kYelloColor,
+  focusColor: kYelloColor,
+  enabledBorder:
+      UnderlineInputBorder(borderSide: BorderSide(color: kYelloColor)),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(color: kYelloColor, width: 3.0),
+  ),
 );
