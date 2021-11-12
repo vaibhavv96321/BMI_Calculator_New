@@ -1,3 +1,4 @@
+import 'package:bmi_new_theme/bottom_button.dart';
 import 'package:bmi_new_theme/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -152,33 +153,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             SizedBox(
               height: 25,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HeightSelector(
-                    weight: weight,
-                  );
-                }));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: kFemaleGradient,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 150),
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Next',
-                      style: kAppBarTextStyle,
-                    ),
-                    Icon(Icons.arrow_forward_sharp),
-                  ],
-                ),
-              ),
-            ),
+            Bottom_Button(() {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return HeightSelector(
+                  weight: weight,
+                  age: age,
+                  gen: gen,
+                );
+              }));
+            }, EdgeInsets.symmetric(horizontal: 150), 'Next',
+                Icon(Icons.arrow_forward_sharp))
           ],
         ),
       ),

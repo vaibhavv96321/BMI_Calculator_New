@@ -1,3 +1,6 @@
+import 'package:bmi_new_theme/Screens/Result_Page.dart';
+import 'package:bmi_new_theme/Screens/welcomeScreen.dart';
+import 'package:bmi_new_theme/bottom_button.dart';
 import 'package:bmi_new_theme/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +14,13 @@ enum unit { cm, ft, m }
 unit uni = unit.cm;
 
 class HeightSelector extends StatefulWidget {
-  HeightSelector({@required this.weight = 0});
+  HeightSelector(
+      {@required this.weight = 0,
+      @required this.age = 0,
+      @required this.gen = gender.t});
+  final gender gen;
   final int weight;
+  final int age;
 
   @override
   _HeightSelectorState createState() => _HeightSelectorState();
@@ -21,7 +29,16 @@ class HeightSelector extends StatefulWidget {
 class _HeightSelectorState extends State<HeightSelector> {
   double _height = 170;
   int _minHeight = 100;
+
   late WeightSliderController _controller;
+
+  void height_convertor() {
+    if (uni == unit.ft) {
+      int inch;
+      inch = 12 * FeetScale.feet + FeetScale.inch;
+      _height = 2.54 * inch;
+    }
+  }
 
   @override
   void initState() {
@@ -83,30 +100,27 @@ class _HeightSelectorState extends State<HeightSelector> {
                   });
                 }, _controller)
               : FeetScale(),
-          GestureDetector(
-            onTap: () {
-              Brain brain = Brain(weight: widget.weight, height: _height);
-              //TODO: here i have to put navigator.push and semd values to result page
-            },
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Calculate',
-                    style: kAppBarTextStyle,
-                  ),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                gradient: kUnitGradient,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              margin: EdgeInsets.only(left: 110, right: 110, bottom: 50),
-            ),
-          ),
+          Bottom_Button(() {
+            height_convertor();
+            print(_height);
+            print(widget.weight);
+            Brain brain = Brain(
+                weight: widget.weight,
+                height: _height,
+                age: widget.age,
+                gen: widget.gen);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ResultPage(
+                weight: widget.weight,
+                height: _height.toInt(),
+                bmi: brain.bmivalue(),
+                status: brain.status(),
+                age: widget.age,
+                bodyFat: brain.body_fat(),
+              );
+            }));
+          }, EdgeInsets.only(left: 110, right: 110, bottom: 50), 'Calculate',
+              Icon(Icons.arrow_forward))
         ],
       ),
     ));

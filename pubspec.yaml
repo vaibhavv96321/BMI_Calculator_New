@@ -52,8 +52,7 @@ flutter:
   assets:
     - Assets/girl.png
     - Assets/boy.png
-    - Assets/Couple.png
-    - Assets/giphy.gif
+
 
 
 
