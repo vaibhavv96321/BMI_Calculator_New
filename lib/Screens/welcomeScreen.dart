@@ -10,9 +10,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'height_page.dart';
 
 enum gender { male, female, t }
-gender gen = gender.t;
 
 class WelcomeScreen extends StatefulWidget {
+  static gender gen = gender.male;
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -72,20 +72,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 GenderBox(
                   genderImage: 'boy.png',
                   genderText: 'MALE',
-                  gradient: (gen == gender.male ? kMaleGradient : null),
+                  gradient:
+                      (WelcomeScreen.gen == gender.male ? kMaleGradient : null),
                   onPress: () {
                     setState(() {
-                      gen = gender.male;
+                      WelcomeScreen.gen = gender.male;
                     });
                   },
                 ),
                 GenderBox(
                   genderImage: 'girl.png',
                   genderText: 'FEMALE',
-                  gradient: gen == gender.female ? kFemaleGradient : null,
+                  gradient: WelcomeScreen.gen == gender.female
+                      ? kFemaleGradient
+                      : null,
                   onPress: () {
                     setState(() {
-                      gen = gender.female;
+                      WelcomeScreen.gen = gender.female;
                     });
                   },
                 ),
@@ -158,7 +161,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 return HeightSelector(
                   weight: weight,
                   age: age,
-                  gen: gen,
+                  gen: WelcomeScreen.gen,
                 );
               }));
             }, EdgeInsets.symmetric(horizontal: 150), 'Next',

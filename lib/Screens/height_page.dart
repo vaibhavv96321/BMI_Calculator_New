@@ -67,13 +67,14 @@ class _HeightSelectorState extends State<HeightSelector> {
           ),
           Center(
             child: Container(
+              width: 400,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade700),
                 color: kBoxColor,
                 borderRadius: BorderRadius.circular(15),
               ),
-              margin: EdgeInsets.symmetric(vertical: 25, horizontal: 100),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              margin: EdgeInsets.symmetric(vertical: 25, horizontal: 80),
+              padding: EdgeInsets.only(right: 10, top: 6, bottom: 6, left: 18),
               child: Row(
                 children: [
                   UnitContainer(unit.cm, () {
