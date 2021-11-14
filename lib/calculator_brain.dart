@@ -12,7 +12,7 @@ class Brain {
       @required this.gen = gender.t});
 
   final double height;
-  final int weight;
+  late final int weight;
   final int age;
   final gender gen;
 

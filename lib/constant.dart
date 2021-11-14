@@ -15,6 +15,13 @@ const kWhiteColor = Colors.white;
 
 const kYelloColor = Color(0xFFFCDB65);
 
+const kDetailTextStyle = TextStyle(
+  color: kYelloColor,
+  fontFamily: 'com',
+  fontSize: 40,
+  fontWeight: FontWeight.bold,
+);
+
 const kAppBarTextStyle = TextStyle(
   color: kWhiteColor,
   fontFamily: 'com',

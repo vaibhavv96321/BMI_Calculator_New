@@ -105,10 +105,11 @@ class _HeightSelectorState extends State<HeightSelector> {
             print(_height);
             print(widget.weight);
             Brain brain = Brain(
-                weight: widget.weight,
-                height: _height,
-                age: widget.age,
-                gen: widget.gen);
+              weight: widget.weight,
+              height: _height,
+              age: widget.age,
+              gen: widget.gen,
+            );
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ResultPage(
                 weight: widget.weight,
@@ -117,6 +118,8 @@ class _HeightSelectorState extends State<HeightSelector> {
                 status: brain.status(),
                 age: widget.age,
                 bodyFat: brain.body_fat(),
+                // minweight: brain.min_weight(),
+                // maxweight: brain.max_weight(),
               );
             }));
           }, EdgeInsets.only(left: 110, right: 110, bottom: 50), 'Calculate',

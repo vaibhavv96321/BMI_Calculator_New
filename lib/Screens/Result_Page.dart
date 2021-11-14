@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:bmi_new_theme/Screens/welcomeScreen.dart';
 import 'package:bmi_new_theme/bottom_button.dart';
 import 'package:bmi_new_theme/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends StatefulWidget {
   ResultPage(
       {required this.bodyFat,
       required this.age,
@@ -20,11 +23,47 @@ class ResultPage extends StatelessWidget {
   final String status;
 
   @override
+  _ResultPageState createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
+  int minweight = 0;
+  int maxweight = 0;
+  bool detail_tap = true;
+  int differ_weight = 0;
+
+  @override
+  void initState() {
+    min_weight();
+    max_weight();
+    differ();
+    super.initState();
+  }
+
+  void min_weight() {
+    minweight = (18 * pow(widget.height / 100, 2)).toInt();
+  }
+
+  void max_weight() {
+    maxweight = (25 * pow(widget.height / 100, 2)).toInt();
+  }
+
+  void differ() {
+    if (widget.weight < minweight) {
+      differ_weight = widget.weight - minweight;
+    } else if (widget.weight > maxweight) {
+      differ_weight = widget.weight - maxweight;
+    } else {
+      differ_weight = 0;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: kBackgrounColor,
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 15.0, bottom: 15),
@@ -39,7 +78,7 @@ class ResultPage extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20, horizontal: 35),
-            height: 220,
+            height: 250,
             width: double.infinity,
             child: Column(
               children: [
@@ -54,15 +93,26 @@ class ResultPage extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  bmi.toStringAsFixed(1),
+                  widget.bmi.toStringAsFixed(1),
                   style: kHeightTextStyle.copyWith(color: kYelloColor),
                 ),
                 Text(
-                  status,
+                  widget.status,
                   style: kSmallTextStyle.copyWith(
                       color: kBackgrounColor, fontWeight: FontWeight.bold),
                 ),
-                Text('details')
+                SizedBox(
+                  height: 10,
+                ),
+                RawMaterialButton(
+                  child: Text(detail_tap ? 'details' : 'close details'),
+                  onPressed: () {
+                    setState(() {
+                      detail_tap = !detail_tap;
+                    });
+                  },
+                ),
+                //TODO: i have to make a expansion panel here in place of details to expand it so that i can add the range for perfect bmi and also differnce between current and perfect
               ],
             ),
             decoration: BoxDecoration(
@@ -71,33 +121,74 @@ class ResultPage extends StatelessWidget {
               gradient: kMaleGradient,
             ),
           ),
-          Center(
-            child: Text(
-              'Body Composition',
-              style: kSmallTextStyle,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Result_page_box('Body Fat', bodyFat.toString() + '%'),
-              Result_page_box('Age', age.toString()),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Result_page_box('Height', '$height'),
-              Result_page_box('Weight', '$weight'),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          detail_tap //TODO: here i have implemented the tertionary operator that if the value is changed then the code is also changed
+              ? Column(children: [
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    'Difference',
+                    style: kAppBarTextStyle,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    differ_weight.toString() + 'kg',
+                    style: kDetailTextStyle,
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    'Perfect Range(kg)',
+                    style: kAppBarTextStyle,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                      minweight.toString() +
+                          '.0 - ' +
+                          maxweight.toString() +
+                          '.0',
+                      style: kDetailTextStyle),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ])
+              : Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        'Body Composition',
+                        style: kSmallTextStyle,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Result_page_box(
+                            'Body Fat', widget.bodyFat.toString() + '%'),
+                        Result_page_box('Age', widget.age.toString()),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Result_page_box('Height', '${widget.height}'),
+                        Result_page_box('Weight', '${widget.weight}'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
           Bottom_Button(() {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return WelcomeScreen();
@@ -129,12 +220,7 @@ class Result_page_box extends StatelessWidget {
         children: [
           Text(
             display_main_text,
-            style: TextStyle(
-              color: kYelloColor,
-              fontFamily: 'com',
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-            ),
+            style: kDetailTextStyle,
           ),
           SizedBox(
             height: 10,
